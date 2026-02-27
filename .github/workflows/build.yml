@@ -3,35 +3,19 @@ name: Build Windows EXE
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
   workflow_dispatch:
 
 jobs:
-  build-windows:
+  build:
     runs-on: windows-latest
-    
     steps:
-    - uses: actions/checkout@v4
-    
-    - name: Set up Python
-      uses: actions/setup-python@v5
-      with:
-        python-version: '3.11'
-    
-    - name: Install dependencies
-      run: |
-        python -m pip install --upgrade pip
-        pip install pyinstaller
-        pip install -r requirements.txt
-    
-    - name: Build EXE
-      run: |
-        pyinstaller --onefile --windowed --name "酒店CAD分析器" --add-data "analyze_cad.py;." gui_launcher.py
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v4
-      with:
-        name: windows-exe
-        path: dist/*.exe
-        retention-days: 30
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install pyinstaller ezdxf openpyxl
+      - run: pyinstaller --onefile --windowed --name "HotelCADAnalyzer" simple_analyzer.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: HotelCADAnalyzer
+          path: dist/*.exe
