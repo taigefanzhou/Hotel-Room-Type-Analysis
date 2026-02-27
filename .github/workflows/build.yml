@@ -14,7 +14,7 @@ jobs:
         with:
           python-version: '3.11'
       - run: pip install pyinstaller ezdxf openpyxl
-      - run: pyinstaller --onefile --windowed --name "HotelCADAnalyzer" simple_analyzer.py
+      - run: pyinstaller --onefile --windowed --name "HotelCADAnalyzer" full_analyzer.py
       - uses: actions/upload-artifact@v4
         with:
           name: HotelCADAnalyzer
